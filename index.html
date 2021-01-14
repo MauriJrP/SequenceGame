@@ -6,7 +6,8 @@
     <style>
       html {
         background-image: url('./background.jpg');
-
+        background-repeat: no-repeat;
+        background-size: cover;
       }
 
       body {
@@ -19,8 +20,8 @@
 
       .gameboard {
         height: auto;
-        width: 50vw;
-        margin: 0 auto;
+        width: 72vw;
+        margin: 10vh auto 0;
         transition: .2s;
         align-self: center;
         text-align: center;
@@ -29,18 +30,27 @@
       }
 
       .color {
-        width: 47%;
-        height: 10em;
+        width: 13vw;
+        height: 13vw;
         margin: 2% auto;
         justify-content: center;
         text-align: center;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 100%;
+        border-bottom: 5px solid black;
+        border-right: 5px solid black;
       }
-      
-      /* .color:hover {
 
-      } */
+      @keyframes box {
+        0%{
+          transform: translateY(0vh);
+        }
+        100% {
+          transform: translateY(-10vh);
+          /* border-left: 5px solid #000; */
+          /* border-top: 5px solid #000 */
+        }
+      }
 
       .left {
         float: left;
@@ -54,10 +64,11 @@
         background: #22a6b3;
       }
       .light {
-        transform:scale(1);transform:scale(1.05);
+        transform:scale(1.05);
 
       }
       .celeste.light {
+        animation: box .5s alternate 2;
         background: #7ed6df;
       }
 
@@ -67,6 +78,7 @@
 
       .violeta.light {
         background: #b464c6;
+        animation: box .5s alternate 2;
       }
 
       .naranja {
@@ -74,6 +86,7 @@
       }
 
       .naranja.light {
+        animation: box .5s alternate 2;
         background: #ffbe76;
       }
 
@@ -82,6 +95,7 @@
       }
 
       .verde.light {
+        animation: box .5s alternate 2;
         background: #badc58;
       }
 
@@ -92,32 +106,34 @@
         color: #2c3e50;
         font-size: 2.5rem;
         position: absolute;
-        /* top: calc(50% - 50px); */
         left: calc(50% - 200px);
         transition: transform .3s;
         top: 6%;
+        border-radius: 10px;
+        outline: none;
+        border-bottom: 4px solid #000;
       }
       .btn-start:hover {
-        transform:scale(1);transform:scale(1.1);
+        transform:scale(0.95);
         cursor: pointer;
         background: #48e;
       }
       .hide {
         /* display: none; */
-        transform:scale(1) translate(0, -180%);
+        transform:translateY(calc(-6vh - 80px));
       }
       .luck {
-        transform:scale(1) translate(0, 0);
+        transform:translate(0, 0);
       }
     </style>
   </head>
   <body>
     <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Inicar!</button>
     <div class="gameboard">
-      <div id="celeste" class="color celeste left" data-color="celeste"></div>
-      <div id="violeta" class="color violeta right" data-color="violeta"></div>
       <div id="naranja" class="color naranja left" data-color="naranja"></div>
       <div id="verde" class="color verde right" data-color="verde"></div>
+      <div id="celeste" class="color celeste left" data-color="celeste"></div>
+      <div id="violeta" class="color violeta right" data-color="violeta"></div>
     </div>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -136,8 +152,8 @@
           this.inicializar = this.inicializar.bind(this)
           this.inicializar()
           this.generarSecuencia()
-          setTimeout(this.siguienteNivel, 500)
-          
+          setTimeout(this.siguienteNivel, 1000)
+
         }
 
         inicializar() {
@@ -172,7 +188,7 @@
           for ( let i = 0; i < this.nivel; i++ ) {
             let color = this.transformarNumeroAColor(this.secuencia[i])
             console.log(color)
-            setTimeout(() => this.iluminarColor(color), 1000 * i) 
+            setTimeout(() => this.iluminarColor(color), 1000 * i)
           }
         }
 
@@ -204,7 +220,7 @@
 
         iluminarColor(color) {
           this.colores[color].classList.add('light')
-          setTimeout(() => this.apagarColor(color), 500)
+          setTimeout(() => this.apagarColor(color), 950)
         }
 
         apagarColor(color) {
@@ -238,7 +254,7 @@
                 this.ganoElJuego()
               } else {
                 this.suerte()
-                setTimeout(this.siguienteNivel, 1500) 
+                setTimeout(this.siguienteNivel, 1500)
               }
             }
           } else {
